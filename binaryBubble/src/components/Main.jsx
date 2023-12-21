@@ -6,40 +6,39 @@ const Main = () => {
   const [inactive, setInactive] = useState([]);
   const [active, setActive] = useState([]);
   const [data, setData] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
   ]);
+
   //   userInput.split(", ");
   const searchKey = () => {
     setData(userInput.split(","));
   };
   const search = () => {
     console.log(data);
-    console.log(binarySearch(data, 14));
+    console.log(binarySearch(data, 20));
+    // console.log(result);
     console.log(inactive);
   };
-
-  function binarySearch(arr, target) {
+  async function binarySearch(arr, target) {
     let start = 0;
     let end = arr.length - 1;
-
     while (start <= end) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       let middle = Math.floor((start + end) / 2);
       if (arr[middle] < target) {
-        setTimeout(() => {
-          console.log(arr.slice(start, middle));
-          let array = arr.slice(start, middle);
-          setInactive((prev) => [...prev, ...array]);
-          setActive(arr.slice(middle, end));
-        }, 1000);
-
+        console.log(arr.slice(start, middle));
+        let array = arr.slice(start, middle);
+        setInactive((prev) => [...prev, ...array]);
+        setActive(arr.slice(middle, end));
         start = middle + 1;
       } else if (arr[middle] > target) {
-        setTimeout(() => {
-          let array = arr.slice(middle, end);
-          setActive(arr.slice(start, middle));
-          setInactive((prev) => [...prev, ...array]);
-        }, 1000);
-
+        let array = arr.slice(middle, end);
+        setActive(arr.slice(start, middle));
+        setInactive((prev) => [...prev, ...array]);
+        console.log(arr.slice(middle, end));
         end = middle - 1;
       } else if (arr[middle] === target) {
         return middle;

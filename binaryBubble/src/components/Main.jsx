@@ -30,17 +30,20 @@ const Main = () => {
       let middle = Math.floor((start + end) / 2);
       if (arr[middle] < target) {
         console.log(arr.slice(start, middle));
-        let array = arr.slice(start, middle);
+        let array = arr.slice(start, middle + 1);
         setInactive((prev) => [...prev, ...array]);
-        setActive(arr.slice(middle, end));
+        setActive(arr.slice(middle, end + 1));
         start = middle + 1;
       } else if (arr[middle] > target) {
-        let array = arr.slice(middle, end);
-        setActive(arr.slice(start, middle));
+        let array = arr.slice(middle, end + 1);
+        setActive(arr.slice(start, middle + 1));
         setInactive((prev) => [...prev, ...array]);
         console.log(arr.slice(middle, end));
         end = middle - 1;
       } else if (arr[middle] === target) {
+        setActive(arr.splice(middle, 1));
+        setInactive(arr);
+        console.log(arr);
         return middle;
       }
     }
@@ -63,7 +66,7 @@ const Main = () => {
       <div style={{ display: "flex", gap: "10px" }}>
         <div style={{ display: "flex", gap: "10px" }}>
           {inactive &&
-            inactive.map((item, index) => (
+            inactive.sort().map((item, index) => (
               <div style={{ backgroundColor: "grey" }} key={index}>
                 {item}
               </div>
@@ -74,6 +77,7 @@ const Main = () => {
             active.map((item, index) => (
               <div style={{ backgroundColor: "green" }} key={index}>
                 {item}
+                {active.length < 2 && <>at index {item - 1}</>}
               </div>
             ))}
         </div>

@@ -1,12 +1,13 @@
-// import "./App.css";
-import Main from "./components/Main";
-
-function App() {
+import Input from "./components/Input";
+import Output from "./components/Output";
+import "./App.css";
+const App = () => {
   return (
     <>
-      <Main></Main>
+      <Input />
+      <Output />
     </>
   );
-}
+};
 
 export default App;

@@ -3,9 +3,9 @@ import { setKey, setInactive, setActive, setData } from "../redux/bubbleSlice";
 import { useState } from "react";
 
 const Main = () => {
-  const [userInput, setUserInput] = useState([]);
-  const [userKey, setUserKey] = useState("");
   const dispatch = useDispatch();
+  const [userInput, setUserInput] = useState([]);
+  const [userKey, setUserkey] = useState("");
   const { key, inactive, active, data } = useSelector((state) => state.data);
 
   const searchKey = () => {
@@ -15,11 +15,10 @@ const Main = () => {
   };
 
   const search = () => {
-    binarySearch(data, key);
+    dispatch(binarySearch(data, key));
   };
 
-  async function binarySearch(array, target) {
-    let arr = [...array];
+  async function binarySearch(arr, target) {
     let start = 0;
     let end = arr.length - 1;
     while (start <= end) {
@@ -28,13 +27,11 @@ const Main = () => {
       let middle = Math.floor((start + end) / 2);
       if (arr[middle] < target) {
         let array = arr.slice(start, middle + 1);
-        console.log(active, inactive);
         dispatch(setInactive([...inactive, ...array].sort((a, b) => a - b)));
         dispatch(setActive(arr.slice(middle, end + 1).sort((a, b) => a - b)));
         start = middle + 1;
       } else if (arr[middle] > target) {
         let array = arr.slice(middle, end + 1);
-        console.log(active, inactive);
         dispatch(setActive(arr.slice(start, middle + 1).sort((a, b) => a - b)));
         dispatch(setInactive([...inactive, ...array].sort((a, b) => a - b)));
 
@@ -61,7 +58,7 @@ const Main = () => {
       <button onClick={searchKey}>Set key</button>
       <input
         value={userKey}
-        onChange={(e) => setUserKey(e.target.value)}
+        onChange={(e) => setUserkey(e.target.value)}
       ></input>
       <button onClick={search}>Search</button>
       <div style={{ display: "flex", gap: "10px" }}>

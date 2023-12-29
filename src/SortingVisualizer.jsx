@@ -3,12 +3,9 @@ import { useSelector } from "react-redux";
 function SortingVisualizer() {
   const { array, selected } = useSelector((state) => state.sorting);
 
-  const maxVal = array.length > 0 ? Math.max(...array) : 0;
-
   return (
     <div style={{ display: "flex", gap: "20px" }}>
       {array.map((item, index) => {
-        const graphicalHeight = maxVal > 0 ? (item / maxVal) * 100 : 0;
         return (
           <h2
             key={index}
@@ -19,7 +16,7 @@ function SortingVisualizer() {
                   : index === selected + 1
                   ? "red"
                   : "blue",
-              height: `${graphicalHeight}px`,
+              height: `${Math.sqrt(item * 100)}px`,
             }}
           >
             {item}
